@@ -1,8 +1,24 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
+  "extends": ["next/core-web-vitals", "next/typescript", "prettier"],
   "rules": {
     "quotes": ["error", "double", { "avoidEscape": true }],
     "@typescript-eslint/no-namespace": ["error", { "allowDeclarations": true }],
-    "eol-last": ["error", "always"]
-  }
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.cy.*"],
+      "extends": ["plugin:cypress/recommended"]
+    }
+  ]
 }

@@ -3,6 +3,7 @@
 /// <reference types="@simonsmith/cypress-image-snapshot/types" />
 
 import React from "react"
+
 import Home from "./page"
 
 describe("<Home />", () => {

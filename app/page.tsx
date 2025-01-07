@@ -1,42 +1,45 @@
-"use client";
+"use client"
 
-import { gql, useSuspenseQuery } from "@apollo/client";
-import Image from "next/image";
+import { gql, useSuspenseQuery } from "@apollo/client"
+import Image from "next/image"
 
 interface PokemonType {
-  id: number;
-  name: string;
-  generationId: number;
+  id: number
+  name: string
+  generationId: number
 }
 
 interface PokemonTypeQuery {
-  id: number;
-  pokemonId: number;
-  type: PokemonType[];
+  id: number
+  pokemonId: number
+  type: PokemonType[]
 }
 
 interface PokemonSprite {
-  id: number;
+  id: number
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sprites: Record<string, any>;
+  sprites: Record<string, any>
 }
 
 interface Pokemon {
-  id: number;
-  name: string;
-  order: number;
-  speciesId: number;
-  types: PokemonTypeQuery[];
-  spriteList: PokemonSprite[];
+  id: number
+  name: string
+  order: number
+  speciesId: number
+  types: PokemonTypeQuery[]
+  spriteList: PokemonSprite[]
 }
 
 interface PokemonListQuery {
-  pokemon: Pokemon[];
+  pokemon: Pokemon[]
 }
 
 const pokemonListQuery = gql`
   query getPokemonList {
-    pokemon: pokemon_v2_pokemon(order_by: {pokemon_species_id: asc}, where: {is_default: {_eq: true}}) {
+    pokemon: pokemon_v2_pokemon(
+      order_by: { pokemon_species_id: asc }
+      where: { is_default: { _eq: true } }
+    ) {
       id
       name
       order
@@ -66,11 +69,20 @@ export default function Home() {
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         {data.pokemon.map((pokemon) => (
           <div key={pokemon.id}>
-            <h2>#{pokemon.speciesId} {pokemon.name}</h2>
-            {pokemon.spriteList[0].sprites.front_default && <Image src={pokemon.spriteList[0].sprites.front_default} alt={pokemon.name} width={100} height={100} />}
+            <h2>
+              #{pokemon.speciesId} {pokemon.name}
+            </h2>
+            {pokemon.spriteList[0].sprites.front_default && (
+              <Image
+                src={pokemon.spriteList[0].sprites.front_default}
+                alt={pokemon.name}
+                width={100}
+                height={100}
+              />
+            )}
           </div>
         ))}
       </main>
     </div>
-  );
+  )
 }

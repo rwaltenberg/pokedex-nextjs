@@ -1,5 +1,5 @@
-import { defineConfig } from "cypress";
 import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/plugin"
+import { defineConfig } from "cypress"
 
 export default defineConfig({
   projectId: "an9y25",
@@ -17,6 +17,6 @@ export default defineConfig({
   },
 
   e2e: {
-    baseUrl: "http://localhost:3000"
+    baseUrl: "http://localhost:3000",
   },
-});
+})
