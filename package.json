@@ -11,11 +11,14 @@
     "e2e:open": "cypress open --e2e"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@heroicons/react": "^2.2.0",
     "next": "14.2.22",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@simonsmith/cypress-image-snapshot": "^9.1.0",
     "@testing-library/cypress": "^10.0.2",
     "@types/node": "^20",
     "@types/react": "^18",

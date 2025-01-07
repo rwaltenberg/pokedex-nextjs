@@ -31,7 +31,22 @@ declare global {
   }
 }
 
-Cypress.Commands.add("mount", mount)
+Cypress.Commands.add("mount", (component, options) => {
+  const Wrapper = () => (
+    <div className="font-inter antialiased h-full w-full">
+      {component}
+    </div>
+  )
+
+  const mountChain = mount(<Wrapper />, options)
+
+  cy.document({ log: false }).then((doc) => {
+    cy.log("Checking if Inter font is loaded")
+    cy.wrap(doc.fonts, { log: false }).invoke({ log: false }, "check", "16px Inter").should("be.true")
+  })
+
+  return mountChain
+})
 
 // Example use:
 // cy.mount(<MyComponent />)
