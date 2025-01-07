@@ -2,6 +2,7 @@
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
     "quotes": ["error", "double", { "avoidEscape": true }],
-    "@typescript-eslint/no-namespace": ["error", { "allowDeclarations": true }]
+    "@typescript-eslint/no-namespace": ["error", { "allowDeclarations": true }],
+    "eol-last": ["error", "always"]
   }
 }
