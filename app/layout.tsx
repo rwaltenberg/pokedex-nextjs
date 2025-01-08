@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import { ThemeProvider } from "next-themes"
 
 import { ApolloWrapper } from "@/lib/apollo/wrapper"
 
@@ -22,9 +23,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-inter antialiased">
-        <ApolloWrapper>{children}</ApolloWrapper>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className="font-inter antialiased bg-white dark:bg-slate-950 text-slate-950 dark:text-white">
+        <ThemeProvider attribute="class">
+          <ApolloWrapper>{children}</ApolloWrapper>
+        </ThemeProvider>
       </body>
     </html>
   )
