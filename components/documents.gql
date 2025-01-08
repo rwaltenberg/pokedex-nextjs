@@ -1,0 +1,24 @@
+query GetPokemonList {
+  pokemon: pokemon_v2_pokemon(
+    order_by: { pokemon_species_id: asc }
+    where: { is_default: { _eq: true } }
+  ) {
+    id
+    name
+    order
+    speciesId: pokemon_species_id
+    types: pokemon_v2_pokemontypes {
+      id
+      pokemonId: pokemon_id
+      type: pokemon_v2_type {
+        id
+        name
+        generationId: generation_id
+      }
+    }
+    spriteList: pokemon_v2_pokemonsprites {
+      sprites
+      id
+    }
+  }
+}

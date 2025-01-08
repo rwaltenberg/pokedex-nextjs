@@ -1,68 +1,12 @@
 "use client"
 
-import { gql, useSuspenseQuery } from "@apollo/client"
+import { useSuspenseQuery } from "@apollo/client"
 import Image from "next/image"
 
-interface PokemonType {
-  id: number
-  name: string
-  generationId: number
-}
-
-interface PokemonTypeQuery {
-  id: number
-  pokemonId: number
-  type: PokemonType[]
-}
-
-interface PokemonSprite {
-  id: number
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sprites: Record<string, any>
-}
-
-interface Pokemon {
-  id: number
-  name: string
-  order: number
-  speciesId: number
-  types: PokemonTypeQuery[]
-  spriteList: PokemonSprite[]
-}
-
-interface PokemonListQuery {
-  pokemon: Pokemon[]
-}
-
-const pokemonListQuery = gql`
-  query getPokemonList {
-    pokemon: pokemon_v2_pokemon(
-      order_by: { pokemon_species_id: asc }
-      where: { is_default: { _eq: true } }
-    ) {
-      id
-      name
-      order
-      speciesId: pokemon_species_id
-      types: pokemon_v2_pokemontypes {
-        id
-        pokemonId: pokemon_id
-        type: pokemon_v2_type {
-          id
-          name
-          generationId: generation_id
-        }
-      }
-      spriteList: pokemon_v2_pokemonsprites {
-        sprites
-        id
-      }
-    }
-  }
-`
+import { GetPokemonListDocument } from "@/generated/graphql"
 
 export default function Home() {
-  const { data } = useSuspenseQuery<PokemonListQuery>(pokemonListQuery)
+  const { data } = useSuspenseQuery(GetPokemonListDocument)
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">

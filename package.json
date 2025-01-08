@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "test": "cypress open --component -b chrome",
     "test:e2e": "cypress open --e2e",
-    "prepare": "husky install"
+    "codegen": "graphql-codegen --config codegen.ts",
+    "prepare": "husky"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
@@ -23,6 +24,8 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.3",
+    "@graphql-codegen/client-preset": "4.5.1",
     "@simonsmith/cypress-image-snapshot": "^9.1.0",
     "@testing-library/cypress": "^10.0.2",
     "@types/node": "^20",
