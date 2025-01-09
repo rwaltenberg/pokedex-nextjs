@@ -1,6 +1,12 @@
 import Image from "next/image"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Pokemon } from "@/types/pokemon"
 
 interface PokeCardProps {
@@ -26,6 +32,16 @@ export default function PokeCard({ pokemon }: PokeCardProps) {
           className="w-full aspect-square"
         />
       </CardContent>
+      <CardFooter className="flex flex-row flex-nowrap p-0 rounded-b-xl">
+        {pokemon.types.map((type) => (
+          <span
+            key={type.id}
+            className="bg-gray-200 dark:bg-slate-800 flex-1 p-2 uppercase font-bold first:rounded-bl-xl last:rounded-br-xl text-center"
+          >
+            {type.name}
+          </span>
+        ))}
+      </CardFooter>
     </Card>
   )
 }
