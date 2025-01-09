@@ -1,3 +1,5 @@
+[![Vercel Deploy](https://deploy-badge.vercel.app/vercel/rwaltenberg-pokedex?style=for-the-badge)](https://rwaltenberg-pokedex.vercel.app)
+
 # Rodrigo's Pokedex
 
 A concept app made by [@rwaltenberg](https://github.com/rwaltenberg) ([Linkedin](https://linkedin.com/in/rwaltenberg))
