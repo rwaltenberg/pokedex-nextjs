@@ -1,3 +1,4 @@
+import tailwindContainerQueries from "@tailwindcss/container-queries"
 import type { Config } from "tailwindcss"
 import tailwindAnimate from "tailwindcss-animate"
 
@@ -35,6 +36,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [tailwindAnimate],
+  plugins: [tailwindAnimate, tailwindContainerQueries],
 }
 export default config

@@ -33,6 +33,7 @@
     "@graphql-codegen/cli": "5.0.3",
     "@graphql-codegen/client-preset": "4.5.1",
     "@simonsmith/cypress-image-snapshot": "^9.1.0",
+    "@tailwindcss/container-queries": "^0.1.1",
     "@testing-library/cypress": "^10.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
