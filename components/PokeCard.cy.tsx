@@ -47,4 +47,16 @@ describe("PokeCard Component", () => {
 
     cy.findByText("fire").should("exist").siblings().should("have.length", 0)
   })
+
+  it("renders the icon of the pokemon type", () => {
+    mount(
+      <div className="grid place-items-center h-screen">
+        <div className="w-1/2">
+          <PokeCard pokemon={mockCharmander} />
+        </div>
+      </div>,
+    )
+
+    cy.findByRole("img", { name: "fire" }).should("exist")
+  })
 })

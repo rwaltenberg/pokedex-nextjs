@@ -12,4 +12,8 @@
   :root {
     --radius: 0.5rem;
   }
+
+  body {
+    @apply font-inter dark:bg-slate-950 dark:text-white;
+  }
 }
