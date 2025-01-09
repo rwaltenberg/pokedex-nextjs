@@ -1,8 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rodrigo's Pokedex
+
+A concept app made by [@rwaltenberg](https://github.com/rwaltenberg) ([Linkedin](https://linkedin.com/in/rwaltenberg))
+
+## Description
+
+This Pokedex is an example React/Next.js application that displays a list of Pokémon using data fetched from a GraphQL API. The application uses Apollo Client for data fetching and Tailwind CSS for styling.
+
+## Features
+
+- Fetches and displays a list of Pokémon with their details.
+- Uses Apollo Client for GraphQL data fetching.
+- Styled with Tailwind CSS.
+- Supports dark mode using `next-themes`.
+- Includes Cypress for component and end-to-end testing.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js
+- npm, yarn, pnpm, or bun
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/rwaltenberg/pokedex-nextjs.git
+cd pokedex-nextjs
+```
+
+2. Install dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+3. Create a [`.env.local`](.env.local) file and add your API URL:
+
+```env
+API_URL=https://beta.pokeapi.co/graphql/v1beta
+```
+
+4. Generate the types for the GraphQL queries:
+
+```bash
+npm run codegen
+# or
+yarn codegen
+# or
+pnpm codegen
+# or
+bun codegen
+```
+
+### Running the Development Server
+
+Start the development server:
 
 ```bash
 npm run dev
@@ -16,18 +76,45 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To create an optimized production build:
 
-## Learn More
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+# or
+bun build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Running Tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To run Cypress component tests:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run test
+# or
+yarn test
+# or
+pnpm test
+# or
+bun test
+```
+
+To run Cypress end-to-end tests:
+
+```bash
+npm run test:e2e
+# or
+yarn test:e2e
+# or
+pnpm test:e2e
+# or
+bun test:e2e
+```
 
 ## Deploy on Vercel
 
