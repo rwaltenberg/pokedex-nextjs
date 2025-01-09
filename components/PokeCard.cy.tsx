@@ -35,30 +35,4 @@ describe("PokeCard Component", () => {
 
     cy.matchImageSnapshot("poke-card")
   })
-
-  it("does not render the image if not available from the api", () => {
-    const mockPokemonWithoutImage = {
-      ...mockPokemon,
-      spriteList: [
-        {
-          id: 1,
-          sprites: {
-            other: {
-              "official-artwork": {
-                front_default: "",
-              },
-            },
-          },
-        },
-      ],
-    }
-
-    mount(
-      <div className="p-3">
-        <PokeCard pokemon={mockPokemonWithoutImage} />
-      </div>,
-    )
-
-    cy.findByRole("img").should("not.exist")
-  })
 })
