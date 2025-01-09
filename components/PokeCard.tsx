@@ -15,14 +15,17 @@ interface PokeCardProps {
 
 export default function PokeCard({ pokemon }: PokeCardProps) {
   return (
-    <Card key={pokemon.id}>
+    <Card
+      key={pokemon.id}
+      className="group/card hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer"
+    >
       <CardHeader className="bg-gray-100 dark:bg-slate-900 flex flex-row items-center space-y-0 p-0 rounded-t-xl">
         <span className="p-2 rounded-tl-xl bg-gray-200 dark:bg-slate-800">
           #{pokemon.number}
         </span>
         <CardTitle className="flex-1 p-2 capitalize">{pokemon.name}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="bg-radial dark:bg-radial-dark group-hover/card:bg-radial-strong transition-bg-radial duration-500 ease-in-out">
         <Image
           src={pokemon.image}
           alt={pokemon.name}

@@ -6,9 +6,41 @@
   .text-balance {
     text-wrap: balance;
   }
+  .bg-radial {
+    background-image: radial-gradient(
+      var(--bg-radial-color) 0,
+      #00000000 var(--bg-radial-weight)
+    );
+  }
+
+  .bg-radial-strong {
+    @apply bg-radial;
+    --bg-radial-weight: 75%;
+  }
+
+  .bg-radial-dark {
+    @apply bg-radial;
+    --bg-radial-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .transition-bg-radial {
+    transition-property: --bg-radial-color, --bg-radial-weight;
+  }
 }
 
 @layer base {
+  @property --bg-radial-color {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: rgba(0, 0, 0, 0.2);
+  }
+
+  @property --bg-radial-weight {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 60%;
+  }
+
   :root {
     --radius: 0.5rem;
   }
