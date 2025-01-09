@@ -8,8 +8,12 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto my-8">
-      {data.map((pokemon) => (
-        <PokeCard key={pokemon.id} pokemon={pokemon} />
+      {data.map((pokemon, index) => (
+        <PokeCard
+          key={pokemon.id}
+          pokemon={pokemon}
+          priorityImage={index < 20}
+        />
       ))}
     </div>
   )

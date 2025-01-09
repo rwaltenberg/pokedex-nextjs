@@ -11,9 +11,13 @@ import { Pokemon } from "@/types/pokemon"
 
 interface PokeCardProps {
   pokemon: Pokemon
+  priorityImage?: boolean
 }
 
-export default function PokeCard({ pokemon }: PokeCardProps) {
+export default function PokeCard({
+  pokemon,
+  priorityImage = false,
+}: PokeCardProps) {
   return (
     <Card
       key={pokemon.id}
@@ -31,8 +35,9 @@ export default function PokeCard({ pokemon }: PokeCardProps) {
           alt={pokemon.name}
           width={0}
           height={0}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="600px"
           className="w-full aspect-square p-2"
+          priority={priorityImage}
         />
       </CardContent>
       <CardFooter className="flex flex-row flex-nowrap p-0 rounded-b-xl">
@@ -40,9 +45,16 @@ export default function PokeCard({ pokemon }: PokeCardProps) {
           <span
             key={type.id}
             style={{ backgroundColor: type.color }}
-            className="bg-gray-200 dark:bg-slate-800 flex-1 p-2 uppercase font-bold first:rounded-bl-xl last:rounded-br-xl text-center flex items-center justify-center gap-x-1"
+            className="bg-gray-200 dark:bg-slate-800 text-white flex-1 p-2 uppercase font-bold first:rounded-bl-xl last:rounded-br-xl text-center flex items-center justify-center gap-x-1"
           >
-            <Image src={type.icon} alt={type.name} width={24} height={24} />
+            <Image
+              src={type.icon}
+              alt={type.name}
+              width={24}
+              height={24}
+              unoptimized
+              priority={priorityImage}
+            />
             {type.name}
           </span>
         ))}
