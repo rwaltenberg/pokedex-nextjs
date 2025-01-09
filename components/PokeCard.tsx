@@ -21,7 +21,7 @@ export default function PokeCard({
   return (
     <Card
       key={pokemon.id}
-      className="group/card hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer"
+      className="group/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer"
     >
       <CardHeader className="bg-gray-100 dark:bg-slate-900 flex flex-row items-center space-y-0 p-0 rounded-t-xl">
         <span className="p-2 rounded-tl-xl bg-gray-200 dark:bg-slate-800">
