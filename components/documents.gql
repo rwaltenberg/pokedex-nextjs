@@ -1,24 +1,37 @@
+fragment PokemonType on pokemon_v2_type {
+  id
+  name
+  generationId: generation_id
+}
+
+fragment PokemonSprite on pokemon_v2_pokemonsprites {
+  sprites
+  id
+}
+
+fragment Pokemon on pokemon_v2_pokemon {
+  id
+  name
+  order
+  speciesId: pokemon_species_id
+  types: pokemon_v2_pokemontypes(order_by: { slot: asc }) {
+    id
+    pokemonId: pokemon_id
+    slot
+    type: pokemon_v2_type {
+      ...PokemonType
+    }
+  }
+  spriteList: pokemon_v2_pokemonsprites {
+    ...PokemonSprite
+  }
+}
+
 query GetPokemonList {
   pokemon: pokemon_v2_pokemon(
     order_by: { pokemon_species_id: asc }
     where: { is_default: { _eq: true } }
   ) {
-    id
-    name
-    order
-    speciesId: pokemon_species_id
-    types: pokemon_v2_pokemontypes {
-      id
-      pokemonId: pokemon_id
-      type: pokemon_v2_type {
-        id
-        name
-        generationId: generation_id
-      }
-    }
-    spriteList: pokemon_v2_pokemonsprites {
-      sprites
-      id
-    }
+    ...Pokemon
   }
 }
