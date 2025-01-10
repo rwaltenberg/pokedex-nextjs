@@ -2,12 +2,27 @@
 /// <reference types="@testing-library/cypress" />
 /// <reference types="@simonsmith/cypress-image-snapshot/types" />
 
-import { mount } from "cypress/react18"
 import React from "react"
 
 import { mockBulbasour, mockCharmander } from "@/cypress/mock/pokemon"
+import { Pokemon } from "@/types/pokemon"
 
 import PokeCard from "./PokeCard"
+
+const mountComponent = (pokemon: Pokemon, theme: "dark" | "light" = "dark") => {
+  cy.document({ log: false })
+    .its("documentElement", { log: false })
+    .its("classList", { log: false })
+    .invoke({ log: false }, "toggle", "dark", theme === "dark")
+
+  cy.mount(
+    <div className="grid place-items-center h-screen">
+      <div className="w-1/2">
+        <PokeCard pokemon={pokemon} />
+      </div>
+    </div>,
+  )
+}
 
 describe("PokeCard Component", () => {
   beforeEach(() => {
@@ -17,15 +32,9 @@ describe("PokeCard Component", () => {
   })
 
   it("renders the pokemon card with correct details", () => {
-    mount(
-      <div className="grid place-items-center h-screen">
-        <div className="w-1/2">
-          <PokeCard pokemon={mockBulbasour} />
-        </div>
-      </div>,
-    )
+    mountComponent(mockBulbasour)
 
-    cy.findByText("#1").should("exist")
+    cy.findByText("#0001").should("exist")
     cy.findByText("bulbasaur").should("exist")
     cy.findByRole("img", { name: "bulbasaur" })
       .should("exist")
@@ -36,27 +45,18 @@ describe("PokeCard Component", () => {
     cy.matchImageSnapshot("poke-card")
   })
 
-  it("renders the correct amount of types of the pokemon", () => {
-    mount(
-      <div className="grid place-items-center h-screen">
-        <div className="w-1/2">
-          <PokeCard pokemon={mockCharmander} />
-        </div>
-      </div>,
-    )
+  it("renders the pokemon card in light theme", () => {
+    mountComponent(mockCharmander, "light")
+    cy.matchImageSnapshot("poke-card-light")
+  })
 
+  it("renders the correct amount of types of the pokemon", () => {
+    mountComponent(mockCharmander)
     cy.findByText("fire").should("exist").siblings().should("have.length", 0)
   })
 
   it("renders the icon of the pokemon type", () => {
-    mount(
-      <div className="grid place-items-center h-screen">
-        <div className="w-1/2">
-          <PokeCard pokemon={mockCharmander} />
-        </div>
-      </div>,
-    )
-
+    mountComponent(mockCharmander)
     cy.findByRole("img", { name: "fire" }).should("exist")
   })
 })
