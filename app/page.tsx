@@ -1,5 +1,6 @@
 "use client"
 
+import { forwardRef, HTMLAttributes } from "react"
 import RenderIfVisible from "react-render-if-visible"
 
 import PokeCard from "@/components/PokeCard"
@@ -16,6 +17,28 @@ export default function Home() {
           defaultHeight={325}
           initialVisible={index < 20}
           visibleOffset={2000}
+          placeholderElement={
+            // This is a workaround to allow searching by string on unredered components
+            forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+              function CardPlaceholder(props, ref) {
+                return (
+                  <div
+                    {...props}
+                    ref={ref}
+                    style={{ ...props.style, color: "transparent" }}
+                  >
+                    <div style={{ textTransform: "capitalize" }}>
+                      #{pokemon.number.toString().padStart(4, "0")}{" "}
+                      {pokemon.name}
+                    </div>
+                    <div style={{ textTransform: "uppercase" }}>
+                      {pokemon.types.map((type) => type.name).join(" ")}
+                    </div>
+                  </div>
+                )
+              },
+            ) as unknown as string
+          }
         >
           <PokeCard pokemon={pokemon} priorityImage={index < 20} />
         </RenderIfVisible>
