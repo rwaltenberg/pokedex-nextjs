@@ -5,7 +5,7 @@ describe("Home", () => {
     cy.visit("/")
   })
 
-  it("displays the Next logo", () => {
-    cy.get("img").should("exist")
+  it("displays the the pokemon cards", () => {
+    cy.findByText("bulbasaur").should("exist")
   })
 })

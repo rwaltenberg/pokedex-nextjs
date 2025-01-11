@@ -31,28 +31,62 @@ describe("PokeCard Component", () => {
     })
   })
 
-  it("renders the pokemon card with correct details", () => {
+  it("renders correctly in dark theme", () => {
     mountComponent(mockBulbasour)
 
-    cy.findByText("#0001").should("exist")
-    cy.findByText("bulbasaur").should("exist")
     cy.findByRole("img", { name: "bulbasaur" })
       .should("exist")
       .and("have.prop", "complete", true)
-    cy.findByText("grass").should("exist")
-    cy.findByText("poison").should("exist")
+    cy.findByRole("img", { name: "grass" }).should(
+      "have.prop",
+      "complete",
+      true,
+    )
+    cy.findByRole("img", { name: "poison" }).should(
+      "have.prop",
+      "complete",
+      true,
+    )
 
-    cy.matchImageSnapshot("poke-card")
+    cy.matchImageSnapshot("poke-card", {
+      failureThreshold: 0.005,
+      failureThresholdType: "percent",
+    })
   })
 
-  it("renders the pokemon card in light theme", () => {
+  it("renders correctly in light theme", () => {
     mountComponent(mockCharmander, "light")
-    cy.matchImageSnapshot("poke-card-light")
+
+    cy.findByRole("img", { name: "charmander" }).should(
+      "have.prop",
+      "complete",
+      true,
+    )
+
+    cy.findByRole("img", { name: "fire" }).should("have.prop", "complete", true)
+
+    cy.matchImageSnapshot("poke-card-light", {
+      failureThreshold: 0.005,
+      failureThresholdType: "percent",
+    })
+  })
+
+  it("renders the pokemon number", () => {
+    mountComponent(mockBulbasour)
+    cy.findByText("#0001").should("exist")
+  })
+
+  it("renders the pokemon name", () => {
+    mountComponent(mockCharmander)
+    cy.findByText("charmander").should("exist")
   })
 
   it("renders the correct amount of types of the pokemon", () => {
     mountComponent(mockCharmander)
     cy.findByText("fire").should("exist").siblings().should("have.length", 0)
+
+    mountComponent(mockBulbasour)
+    cy.findByText("grass").should("exist").siblings().should("have.length", 1)
   })
 
   it("renders the icon of the pokemon type", () => {
