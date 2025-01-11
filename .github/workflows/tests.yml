@@ -2,7 +2,26 @@ name: Cypress
 on: push
 
 jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: npm ci
+      - name: Run Chromatic
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
   component-tests:
+    name: Run Cypress (Component Tests)
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
@@ -19,6 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   e2e-tests:
+    name: Run Cypress (E2E)
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout
