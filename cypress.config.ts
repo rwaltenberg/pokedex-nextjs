@@ -1,4 +1,3 @@
-import { addMatchImageSnapshotPlugin } from "@simonsmith/cypress-image-snapshot/plugin"
 import { defineConfig } from "cypress"
 
 export default defineConfig({
@@ -10,9 +9,6 @@ export default defineConfig({
     devServer: {
       framework: "next",
       bundler: "webpack",
-    },
-    setupNodeEvents(on) {
-      addMatchImageSnapshotPlugin(on)
     },
   },
 

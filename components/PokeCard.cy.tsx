@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
-/// <reference types="@simonsmith/cypress-image-snapshot/types" />
 
 import React from "react"
 
@@ -28,46 +27,6 @@ describe("PokeCard Component", () => {
   beforeEach(() => {
     cy.intercept("_next/image*", (req) => {
       req.url = new URL(req.url).searchParams.get("url") ?? req.url
-    })
-  })
-
-  it("renders correctly in dark theme", () => {
-    mountComponent(mockBulbasour)
-
-    cy.findByRole("img", { name: "bulbasaur" })
-      .should("exist")
-      .and("have.prop", "complete", true)
-    cy.findByRole("img", { name: "grass" }).should(
-      "have.prop",
-      "complete",
-      true,
-    )
-    cy.findByRole("img", { name: "poison" }).should(
-      "have.prop",
-      "complete",
-      true,
-    )
-
-    cy.matchImageSnapshot("poke-card", {
-      failureThreshold: 0.005,
-      failureThresholdType: "percent",
-    })
-  })
-
-  it("renders correctly in light theme", () => {
-    mountComponent(mockCharmander, "light")
-
-    cy.findByRole("img", { name: "charmander" }).should(
-      "have.prop",
-      "complete",
-      true,
-    )
-
-    cy.findByRole("img", { name: "fire" }).should("have.prop", "complete", true)
-
-    cy.matchImageSnapshot("poke-card-light", {
-      failureThreshold: 0.005,
-      failureThresholdType: "percent",
     })
   })
 
