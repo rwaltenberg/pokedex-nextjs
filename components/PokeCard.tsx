@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { forwardRef } from "react"
 
 import {
   Card,
@@ -7,21 +8,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 import { Pokemon } from "@/types/pokemon"
 
-interface PokeCardProps {
+interface PokeCardProps extends React.ComponentPropsWithoutRef<"div"> {
   pokemon: Pokemon
   priorityImage?: boolean
 }
 
-export default function PokeCard({
-  pokemon,
-  priorityImage = false,
-}: PokeCardProps) {
+export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
+  { pokemon, priorityImage = false, ...props },
+  ref,
+) {
   return (
     <Card
-      key={pokemon.id}
-      className="group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer"
+      {...props}
+      ref={ref}
+      className={cn(
+        "group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer",
+        props.className,
+      )}
     >
       <CardHeader className="bg-gray-100 dark:bg-slate-900 text-xs @[12rem]/card:text-base flex flex-row items-center space-y-0 p-0 rounded-t-xl">
         <span className="p-[4cqi] rounded-tl-xl bg-gray-200 text-[6.5cqi] font-semibold dark:bg-slate-800">
@@ -64,4 +70,4 @@ export default function PokeCard({
       </CardFooter>
     </Card>
   )
-}
+})

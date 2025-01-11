@@ -8,7 +8,7 @@ const nextConfig = {
         pathname: "/PokeAPI/sprites/master/sprites/**",
       },
     ],
-  }
+  },
 }
 
 export default nextConfig
