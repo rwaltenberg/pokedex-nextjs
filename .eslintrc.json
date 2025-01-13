@@ -27,6 +27,14 @@
     {
       "files": ["*.stories.*"],
       "extends": ["plugin:storybook/recommended"]
+    },
+    {
+      "files": ["*.test.*"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react"
+      ]
     }
   ]
 }

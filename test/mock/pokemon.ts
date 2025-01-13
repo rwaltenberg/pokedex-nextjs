@@ -1,7 +1,7 @@
 import { TYPE_COLORS } from "@/lib/pokemon"
 import { Pokemon } from "@/types/pokemon"
 
-export const mockBulbasour: Pokemon = {
+export const mockBulbasaur: Pokemon = {
   id: 1,
   number: 1,
   name: "bulbasaur",

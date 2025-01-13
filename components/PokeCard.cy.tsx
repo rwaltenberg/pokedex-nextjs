@@ -1,9 +1,8 @@
-/// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
 import React from "react"
 
-import { mockBulbasour, mockCharmander } from "@/cypress/mock/pokemon"
+import { mockBulbasaur, mockCharmander } from "@/test/mock/pokemon"
 import { Pokemon } from "@/types/pokemon"
 
 import PokeCard from "./PokeCard"
@@ -31,7 +30,7 @@ describe("PokeCard Component", () => {
   })
 
   it("renders the pokemon number", () => {
-    mountComponent(mockBulbasour)
+    mountComponent(mockBulbasaur)
     cy.findByText("#0001").should("exist")
   })
 
@@ -44,7 +43,7 @@ describe("PokeCard Component", () => {
     mountComponent(mockCharmander)
     cy.findByText("fire").should("exist").siblings().should("have.length", 0)
 
-    mountComponent(mockBulbasour)
+    mountComponent(mockBulbasaur)
     cy.findByText("grass").should("exist").siblings().should("have.length", 1)
   })
 

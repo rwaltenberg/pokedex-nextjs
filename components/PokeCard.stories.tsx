@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { mockBulbasour, mockCharmander } from "@/cypress/mock/pokemon"
+import { mockBulbasaur, mockCharmander } from "@/test/mock/pokemon"
 
 import PokeCard from "./PokeCard"
 
 const mockPokemonMap = {
-  bulbasour: mockBulbasour,
+  bulbasour: mockBulbasaur,
   charmander: mockCharmander,
 } as const
 
