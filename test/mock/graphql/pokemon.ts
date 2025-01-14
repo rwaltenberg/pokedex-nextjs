@@ -5,83 +5,48 @@ import {
   PokemonTypes,
 } from "@/types/pokemon"
 
-const generatePokemonMock = <
-  I extends number,
-  N extends string,
-  T1 extends PokemonTypes,
-  T2 extends PokemonTypes | undefined = undefined,
->(
-  id: I,
-  name: N,
-  type1: T1,
-  type2?: T2,
-) =>
-  ({
-    id,
-    name,
-    order: id,
-    speciesId: id,
-    types: [type1, type2].filter(Boolean).map((type, index) => ({
-      id: type,
-      pokemonId: id,
-      slot: index + 1,
-      type: {
-        id: type,
-        name: pokemonTypeNames[type as keyof PokemonTypeNames],
-        generationId: 1,
-      },
-    })) as unknown as T2 extends undefined
-      ? [
-          {
-            id: T1
-            pokemonId: I
-            slot: 1
-            type: { id: T1; name: PokemonTypeNames[T1]; generationId: number }
+const generatePokemonMock = (
+  id: number,
+  name: string,
+  type1: PokemonTypes,
+  type2?: PokemonTypes,
+): PokemonFragment => ({
+  id,
+  name,
+  order: id,
+  speciesId: id,
+  types: [type1, type2].filter(Boolean).map((type, index) => ({
+    id: type as number,
+    pokemonId: id,
+    slot: index + 1,
+    type: {
+      id: type as number,
+      name: pokemonTypeNames[type as keyof PokemonTypeNames] as string,
+      generationId: 1,
+    },
+  })),
+  spriteList: [
+    {
+      sprites: {
+        other: {
+          home: {
+            front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${id}.png`,
+            front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`,
           },
-        ]
-      : [
-          {
-            id: T1
-            pokemonId: I
-            slot: 1
-            type: { id: T1; name: PokemonTypeNames[T1]; generationId: number }
+          "official-artwork": {
+            front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png`,
+            front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
           },
-          {
-            id: T2
-            pokemonId: I
-            slot: 2
-            type: {
-              id: T2
-              name: PokemonTypeNames[T2 & PokemonTypes]
-              generationId: number
-            }
-          },
-        ],
-    spriteList: [
-      {
-        sprites: {
-          other: {
-            home: {
-              front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/shiny/${id}.png`,
-              front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${id}.png`,
-            },
-            "official-artwork": {
-              front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png`,
-              front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-            } as {
-              front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${I}.png`
-              front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${I}.png`
-            } | null,
-          },
-          back_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${id}.png`,
-          front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`,
-          back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${id}.png`,
-          front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
         },
-        id,
+        back_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/${id}.png`,
+        front_shiny: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`,
+        back_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/${id}.png`,
+        front_default: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
       },
-    ],
-  }) satisfies PokemonFragment
+      id,
+    },
+  ],
+})
 
 export const mockBulbasaur = generatePokemonMock(
   1,

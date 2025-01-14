@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export enum PokemonTypes {
   normal = 1,
   fighting = 2,
@@ -43,25 +42,17 @@ export const pokemonTypeNames = {
 
 export type PokemonTypeNames = typeof pokemonTypeNames
 
-export type PokemonType<N extends PokemonTypes = any> = {
-  id: PokemonTypes
-  name: PokemonTypeNames[N]
+export type PokemonType = {
+  id: number
+  name: string
   color: string
   icon: string
 }
 
-export type Pokemon<
-  I extends number = any,
-  N extends number = any,
-  NAME extends string = any,
-  T1 extends PokemonTypes = any,
-  T2 extends PokemonTypes | undefined | null = any,
-> = {
-  id: I
-  number: N
-  name: NAME
+export type Pokemon = {
+  id: number
+  number: number
+  name: string
   image: string
-  types: T2 extends undefined | null
-    ? [PokemonType<T1>]
-    : [PokemonType<T1>, PokemonType<NonNullable<T2>>]
+  types: PokemonType[]
 }

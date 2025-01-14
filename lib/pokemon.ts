@@ -49,10 +49,7 @@ export const getPokemonImageUrl = (pokemon: PokemonFragment): string => {
   return getPokemonLeageImageUrl(pokemon.speciesId ?? pokemon.id)
 }
 
-export function getPokemonTypes<
-  T1 extends PokemonTypes,
-  T2 extends PokemonTypes | undefined | null,
->(pokemon: PokemonFragment) {
+export function getPokemonTypes(pokemon: PokemonFragment): PokemonType[] {
   return pokemon.types
     .filter((typeUnion) => typeUnion.type)
     .map((typeUnion) => ({
@@ -60,32 +57,15 @@ export function getPokemonTypes<
       name: typeUnion.type!.name,
       color: getTypeColor(typeUnion.type!.id),
       icon: getTypeIconUrl(typeUnion.type!.name),
-    })) as PokemonFragment["types"][1] extends undefined | null
-    ? [PokemonType<T1>]
-    : [PokemonType<T1>, PokemonType<NonNullable<T2>>]
+    }))
 }
 
-export function parsePokemon<
-  F extends PokemonFragment,
-  I extends Readonly<F>["id"],
-  N extends Readonly<F>["speciesId"] extends number
-    ? Readonly<F>["speciesId"]
-    : Readonly<F>["id"],
-  NAME extends Readonly<F>["name"],
-  T1 extends Readonly<F>["types"][0] extends undefined | null
-    ? never
-    : NonNullable<Readonly<F>["types"][0]["type"]>["id"],
-  T2 extends Readonly<F>["types"][1] extends undefined | null
-    ? never
-    : NonNullable<Readonly<F>["types"][1]["type"]>["id"],
->(pokemon: F): Pokemon<I, N, NAME, T1, T2> {
-  const id = pokemon.id as I
-  const number = (pokemon.speciesId ?? pokemon.id) as N
-  const name = pokemon.name as NAME
+export function parsePokemon(pokemon: PokemonFragment): Pokemon {
+  const id = pokemon.id
+  const number = pokemon.speciesId ?? pokemon.id
+  const name = pokemon.name
   const image = getPokemonImageUrl(pokemon)
-  const types = getPokemonTypes(pokemon) as T2 extends undefined | null
-    ? [PokemonType<T1>]
-    : [PokemonType<T1>, PokemonType<T2>]
+  const types = getPokemonTypes(pokemon)
 
   if (!id || !number || !name || !image || !types?.length) {
     throw new Error("Could not find enough information for this pokemon")
