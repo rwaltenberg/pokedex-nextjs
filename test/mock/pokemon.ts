@@ -1,40 +1,23 @@
-import { TYPE_COLORS } from "@/lib/pokemon"
-import { Pokemon } from "@/types/pokemon"
+import { parsePokemon } from "@/lib/pokemon"
 
-export const mockBulbasaur: Pokemon = {
-  id: 1,
-  number: 1,
-  name: "bulbasaur",
-  types: [
-    {
-      id: 12,
-      name: "grass",
-      color: TYPE_COLORS[12],
-      icon: "https://raw.githubusercontent.com/rwaltenberg/pokemon-type-icons/refs/heads/main/icons/grass.svg",
-    },
-    {
-      id: 4,
-      name: "poison",
-      color: TYPE_COLORS[4],
-      icon: "https://raw.githubusercontent.com/rwaltenberg/pokemon-type-icons/refs/heads/main/icons/poison.svg",
-    },
-  ],
-  image:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-}
+import * as mockedGraphqlPokemon from "./graphql/pokemon"
 
-export const mockCharmander: Pokemon = {
-  id: 4,
-  number: 4,
-  name: "charmander",
-  types: [
-    {
-      id: 10,
-      name: "fire",
-      color: TYPE_COLORS[10],
-      icon: "https://raw.githubusercontent.com/rwaltenberg/pokemon-type-icons/refs/heads/main/icons/fire.svg",
-    },
-  ],
-  image:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
-}
+export const mockBulbasaur = parsePokemon(mockedGraphqlPokemon.mockBulbasaur)
+
+export const mockIvysaur = parsePokemon(mockedGraphqlPokemon.mockIvysaur)
+
+export const mockVenusaur = parsePokemon(mockedGraphqlPokemon.mockVenusaur)
+
+export const mockCharmander = parsePokemon(mockedGraphqlPokemon.mockCharmander)
+
+export const mockCharmeleon = parsePokemon(mockedGraphqlPokemon.mockCharmeleon)
+
+export const mockCharizard = parsePokemon(mockedGraphqlPokemon.mockCharizard)
+
+export const mockSquirtle = parsePokemon(mockedGraphqlPokemon.mockSquirtle)
+
+export const mockWartortle = parsePokemon(mockedGraphqlPokemon.mockWartortle)
+
+export const mockBlastoise = parsePokemon(mockedGraphqlPokemon.mockBlastoise)
+
+export const mockCaterpie = parsePokemon(mockedGraphqlPokemon.mockCaterpie)

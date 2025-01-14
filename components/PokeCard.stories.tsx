@@ -1,13 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { mockBulbasaur, mockCharmander } from "@/test/mock/pokemon"
+import * as mockedPokemon from "@/test/mock/pokemon"
 
 import PokeCard from "./PokeCard"
 
-const mockPokemonMap = {
-  bulbasour: mockBulbasaur,
-  charmander: mockCharmander,
-} as const
+type MockedPokemon = Readonly<typeof mockedPokemon>
+type MockedPokemonKey = keyof MockedPokemon
+
+type MockPokemonMap = {
+  [Key in MockedPokemonKey as (typeof mockedPokemon)[Key]["name"]]: (typeof mockedPokemon)[Key]
+}
+
+const mockPokemonNames = Object.values(mockedPokemon)
+  .sort((a, b) => a.number - b.number)
+  .map((pokemon) => pokemon.name)
+
+const mockPokemonMap = Object.fromEntries(
+  Object.entries(mockedPokemon).map(([, pokemon]) => [pokemon.name, pokemon]),
+) as MockPokemonMap
 
 const meta = {
   title: "Pokemon/PokeCard",
@@ -20,14 +30,14 @@ const meta = {
   argTypes: {
     mockPokemon: {
       name: "Pokemon",
-      control: "inline-radio",
-      options: Object.keys(mockPokemonMap),
+      control: "select",
+      options: mockPokemonNames,
     },
   },
   args: {
-    mockPokemon: "bulbasour",
+    mockPokemon: "bulbasaur",
   },
-} satisfies Meta<{ mockPokemon: keyof typeof mockPokemonMap }>
+} satisfies Meta<{ mockPokemon: keyof MockPokemonMap }>
 
 export default meta
 type Story = StoryObj<typeof meta>

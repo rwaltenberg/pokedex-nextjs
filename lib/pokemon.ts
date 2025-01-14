@@ -1,25 +1,25 @@
 import { PokemonFragment } from "@/generated/graphql"
-import { Pokemon, PokemonType } from "@/types/pokemon"
+import { Pokemon, PokemonType, PokemonTypes } from "@/types/pokemon"
 
 export const TYPE_COLORS = {
-  1: "hsl(208.24deg 8.37% 60.2%)", // normal
-  2: "hsl(342.21deg 60.17% 52.75%)", // fighting
-  3: "hsl(220deg 54.17% 71.76%)", // flying
-  4: "hsl(281.68deg 46.8% 60.2%)", // poison
-  5: "hsl(20.8deg 66.96% 56.08%)", // ground
-  6: "hsl(52.17deg 22.33% 59.61%)", // rock
-  7: "hsl(67.06deg 73.12% 36.47%)", // bug
-  8: "hsl(300deg 26.55% 34.71%)", // ghost
-  9: "hsl(195.68deg 38.26% 54.9%)", // steel
-  10: "hsl(359.68deg 79.17% 52.94%)", // fire
-  11: "hsl(213.64deg 86.09% 54.9%)", // water
-  12: "hsl(109deg 59.41% 39.61%)", // grass
-  13: "hsl(46.08deg 100% 49.02%)", // electric
-  14: "hsl(340.69deg 84.47% 59.61%)", // psychic
-  15: "hsl(192.19deg 100% 62.35%)", // ice
-  16: "hsl(233.38deg 70.73% 59.8%)", // dragon
-  17: "hsl(7.06deg 11.89% 28.04%)", // dark
-  18: "hsl(300deg 79.87% 68.82%)", // fairy
+  [PokemonTypes.normal]: "hsl(208.24deg 8.37% 60.2%)",
+  [PokemonTypes.fighting]: "hsl(342.21deg 60.17% 52.75%)",
+  [PokemonTypes.flying]: "hsl(220deg 54.17% 71.76%)",
+  [PokemonTypes.poison]: "hsl(281.68deg 46.8% 60.2%)",
+  [PokemonTypes.ground]: "hsl(20.8deg 66.96% 56.08%)",
+  [PokemonTypes.rock]: "hsl(52.17deg 22.33% 59.61%)",
+  [PokemonTypes.bug]: "hsl(67.06deg 73.12% 36.47%)",
+  [PokemonTypes.ghost]: "hsl(300deg 26.55% 34.71%)",
+  [PokemonTypes.steel]: "hsl(195.68deg 38.26% 54.9%)",
+  [PokemonTypes.fire]: "hsl(359.68deg 79.17% 52.94%)",
+  [PokemonTypes.water]: "hsl(213.64deg 86.09% 54.9%)",
+  [PokemonTypes.grass]: "hsl(109deg 59.41% 39.61%)",
+  [PokemonTypes.electric]: "hsl(46.08deg 100% 49.02%)",
+  [PokemonTypes.psychic]: "hsl(340.69deg 84.47% 59.61%)",
+  [PokemonTypes.ice]: "hsl(192.19deg 100% 62.35%)",
+  [PokemonTypes.dragon]: "hsl(233.38deg 70.73% 59.8%)",
+  [PokemonTypes.dark]: "hsl(7.06deg 11.89% 28.04%)",
+  [PokemonTypes.fairy]: "hsl(300deg 79.87% 68.82%)",
 } as const
 
 export const getPokemonLeageImageUrl = (number: number): string => {
@@ -49,7 +49,10 @@ export const getPokemonImageUrl = (pokemon: PokemonFragment): string => {
   return getPokemonLeageImageUrl(pokemon.speciesId ?? pokemon.id)
 }
 
-export function getPokemonTypes(pokemon: PokemonFragment): PokemonType[] {
+export function getPokemonTypes<
+  T1 extends PokemonTypes,
+  T2 extends PokemonTypes | undefined | null,
+>(pokemon: PokemonFragment) {
   return pokemon.types
     .filter((typeUnion) => typeUnion.type)
     .map((typeUnion) => ({
@@ -57,15 +60,32 @@ export function getPokemonTypes(pokemon: PokemonFragment): PokemonType[] {
       name: typeUnion.type!.name,
       color: getTypeColor(typeUnion.type!.id),
       icon: getTypeIconUrl(typeUnion.type!.name),
-    }))
+    })) as PokemonFragment["types"][1] extends undefined | null
+    ? [PokemonType<T1>]
+    : [PokemonType<T1>, PokemonType<NonNullable<T2>>]
 }
 
-export function parsePokemon(pokemon: PokemonFragment): Pokemon {
-  const id = pokemon.id
-  const number = pokemon.speciesId ?? pokemon.id
-  const name = pokemon.name
+export function parsePokemon<
+  F extends PokemonFragment,
+  I extends Readonly<F>["id"],
+  N extends Readonly<F>["speciesId"] extends number
+    ? Readonly<F>["speciesId"]
+    : Readonly<F>["id"],
+  NAME extends Readonly<F>["name"],
+  T1 extends Readonly<F>["types"][0] extends undefined | null
+    ? never
+    : NonNullable<Readonly<F>["types"][0]["type"]>["id"],
+  T2 extends Readonly<F>["types"][1] extends undefined | null
+    ? never
+    : NonNullable<Readonly<F>["types"][1]["type"]>["id"],
+>(pokemon: F): Pokemon<I, N, NAME, T1, T2> {
+  const id = pokemon.id as I
+  const number = (pokemon.speciesId ?? pokemon.id) as N
+  const name = pokemon.name as NAME
   const image = getPokemonImageUrl(pokemon)
-  const types = getPokemonTypes(pokemon)
+  const types = getPokemonTypes(pokemon) as T2 extends undefined | null
+    ? [PokemonType<T1>]
+    : [PokemonType<T1>, PokemonType<T2>]
 
   if (!id || !number || !name || !image || !types?.length) {
     throw new Error("Could not find enough information for this pokemon")
