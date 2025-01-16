@@ -56,9 +56,6 @@ export const DarkTheme: Story = {
   globals: {
     backgrounds: { value: "dark" },
   },
-  parameters: {
-    backgrounds: { default: "dark" },
-  },
 }
 
 export const OneType: Story = {

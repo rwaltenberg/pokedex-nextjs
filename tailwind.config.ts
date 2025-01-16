@@ -28,6 +28,7 @@ const config: Config = {
       },
       fontFamily: {
         inter: "var(--font-inter), sans-serif",
+        marhey: "var(--font-marhey), sans-serif",
       },
       borderRadius: {
         lg: "var(--radius)",

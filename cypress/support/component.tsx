@@ -39,6 +39,8 @@ Cypress.Commands.add("mount", (component, options) => {
   const mountChain = mount(<Wrapper />, options)
 
   cy.document({ log: false }).then((doc) => {
+    if (!doc.textContent?.trim()) return // no need to check fonts
+
     cy.log("Checking if Inter font is loaded")
     cy.wrap(doc.fonts, { log: false })
       .invoke({ log: false }, "check", "16px Inter")

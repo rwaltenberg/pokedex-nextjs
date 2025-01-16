@@ -1,6 +1,5 @@
 import { Decorator } from "@storybook/react"
 import React, { useLayoutEffect } from "react"
-import { useStorybookApi } from "@storybook/manager-api"
 
 const BackgroundDecorator: Decorator = function BackgroundDecorator(
   Story,
