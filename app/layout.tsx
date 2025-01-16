@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { Inter, Marhey } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 
+import Header from "@/components/Header"
 import { ApolloWrapper } from "@/lib/apollo/wrapper"
 
 import "./globals.css"
@@ -36,7 +37,12 @@ export default function RootLayout({
     >
       <body className="font-inter antialiased bg-white dark:bg-slate-950 text-slate-950 dark:text-white">
         <ThemeProvider attribute="class">
-          <ApolloWrapper>{children}</ApolloWrapper>
+          <ApolloWrapper>
+            <Header />
+            <main className="container lg:max-w-5xl mx-auto my-4 lg:my-8 px-4 lg:px-0">
+              {children}
+            </main>
+          </ApolloWrapper>
         </ThemeProvider>
       </body>
     </html>

@@ -25,7 +25,7 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
       {...props}
       ref={ref}
       className={cn(
-        "group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer",
+        "pokecard group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer",
         props.className,
       )}
     >

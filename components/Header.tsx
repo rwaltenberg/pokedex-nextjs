@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 import logo from "@/app/icon.svg"
 import { ThemeSwitcher } from "@/components/ThemeSwitcher"
@@ -10,8 +11,12 @@ export default function Header() {
         role="group"
         className="container lg:max-w-5xl flex items-center gap-3 mx-auto px-4 lg:px-0"
       >
-        <Image src={logo} alt="Pokedex Logo" width={64} height={64} />
-        <h1 className="text-3xl font-bold font-marhey text-center">Pokedex</h1>
+        <Link className="flex items-center gap-3" href="/">
+          <Image src={logo} alt="Pokedex Logo" width={64} height={64} />
+          <h1 className="text-3xl font-bold font-marhey text-center">
+            Pokedex
+          </h1>
+        </Link>
         <nav className="ml-auto flex items-center gap-4 justify-end">
           <ThemeSwitcher />
         </nav>
