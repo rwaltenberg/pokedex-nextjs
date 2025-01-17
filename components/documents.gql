@@ -37,3 +37,9 @@ query GetPokemonList($limit: Int, $offset: Int) {
     ...Pokemon
   }
 }
+
+query GetPokemon($id: Int!) {
+  pokemon: pokemon_v2_pokemon_by_pk(id: $id) {
+    ...Pokemon
+  }
+}

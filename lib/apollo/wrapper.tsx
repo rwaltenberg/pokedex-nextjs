@@ -3,10 +3,11 @@
 import { ApolloLink, HttpLink } from "@apollo/client"
 import {
   ApolloClient,
-  InMemoryCache,
   SSRMultipartLink,
   ApolloNextAppProvider,
 } from "@apollo/experimental-nextjs-app-support"
+
+import { cache } from "./cache"
 
 function makeClient() {
   const httpLink = new HttpLink({
@@ -14,7 +15,7 @@ function makeClient() {
   })
 
   return new ApolloClient({
-    cache: new InMemoryCache(),
+    cache,
     link:
       typeof window === "undefined"
         ? ApolloLink.from([

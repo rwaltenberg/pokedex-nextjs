@@ -2,16 +2,50 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { forwardRef, HTMLAttributes, useCallback, useState } from "react"
-import RenderIfVisible from "react-render-if-visible"
+import { forwardRef, useCallback, useState } from "react"
+import { GridComponents, VirtuosoGrid } from "react-virtuoso"
 import slugify from "slugify"
 
 import PokeCard from "@/components/PokeCard"
 import { usePokemonList } from "@/hooks/usePokemonList"
 import { cn } from "@/lib/utils"
 
+const gridComponents: GridComponents<{
+  selected: number | null
+  hasMore: boolean
+}> = {
+  List: forwardRef(function PokemonListGrid(
+    { children, context, ...props },
+    ref,
+  ) {
+    return (
+      <div
+        ref={ref}
+        {...props}
+        className={cn(
+          "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8",
+          { "*:opacity-0 *:pointer-events-none": !!context?.selected },
+          props.className,
+        )}
+      >
+        {children}
+      </div>
+    )
+  }),
+  Footer: function PokemonListLoading({ context }) {
+    return (
+      context?.hasMore && (
+        <div className="grid place-items-center py-8">
+          <span className="opacity-60 loading loading-dots loading-lg" />
+        </div>
+      )
+    )
+  },
+}
+
 export default function PokemonList() {
-  const { data } = usePokemonList()
+  const { pokemonList, fetch, hasMore } = usePokemonList()
+
   const router = useRouter()
   const [selected, setSelected] = useState<number | null>(null)
 
@@ -31,7 +65,7 @@ export default function PokemonList() {
       event.preventDefault()
 
       document.body.style.overflow = "hidden"
-      target.closest<HTMLDivElement>(".renderIfVisible")!.style.opacity = "1"
+      target.closest<HTMLDivElement>(".pokemon-list-item")!.style.opacity = "1"
 
       await new Promise<void>((resolve) => {
         if (window.getComputedStyle(target).transform === "none") {
@@ -83,52 +117,26 @@ export default function PokemonList() {
   )
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8",
-        { "*:opacity-0 *:pointer-events-none": selected !== null },
-      )}
-    >
-      {data.map((pokemon, index) => (
-        <RenderIfVisible
-          rootElementClass="transition-opacity duration-300"
-          key={pokemon.id}
-          defaultHeight={325}
-          initialVisible={index < 20}
-          visibleOffset={2000}
-          placeholderElement={
-            // This is a workaround to allow searching by string on unredered components
-            forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
-              function CardPlaceholder(props, ref) {
-                return (
-                  <div
-                    {...props}
-                    ref={ref}
-                    style={{ ...props.style, color: "transparent" }}
-                  >
-                    <div style={{ textTransform: "capitalize" }}>
-                      #{pokemon.number.toString().padStart(4, "0")}{" "}
-                      {pokemon.name}
-                    </div>
-                    <div style={{ textTransform: "uppercase" }}>
-                      {pokemon.types.map((type) => type.name).join(" ")}
-                    </div>
-                  </div>
-                )
-              },
-            ) as unknown as string
-          }
+    <VirtuosoGrid
+      useWindowScroll
+      data={pokemonList}
+      components={gridComponents}
+      endReached={() => fetch()}
+      context={{ selected, hasMore }}
+      itemClassName="pokemon-list-item transition-opacity duration-300"
+      itemContent={(index, pokemon) => (
+        <Link
+          href={`/${pokemon.id}-${slugify(pokemon.name)}`}
+          onClick={choosePokemon}
         >
-          <Link
-            href={`/${pokemon.id}-${slugify(pokemon.name)}`}
+          <PokeCard
+            key={pokemon.id}
+            pokemon={pokemon}
             data-id={pokemon.id}
             data-name={pokemon.name}
-            onClick={choosePokemon}
-          >
-            <PokeCard pokemon={pokemon} priorityImage={index < 20} />
-          </Link>
-        </RenderIfVisible>
-      ))}
-    </div>
+          />
+        </Link>
+      )}
+    />
   )
 }
