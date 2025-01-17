@@ -20,7 +20,7 @@ describe("PokeCard", () => {
   it("displays the correct Pokemon image", () => {
     render(<PokeCard pokemon={mockBulbasaur} />)
     const image = screen.getByAltText("bulbasaur")
-    expect(image).toHaveAttribute("src", expect.stringContaining("%2F1.png"))
+    expect(image).toHaveAttribute("src", expect.stringContaining("1.png"))
   })
 
   it("displays the correct Pokemon types", () => {

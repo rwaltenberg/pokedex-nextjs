@@ -46,6 +46,7 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
           sizes="600px"
           className="w-full aspect-square p-[8cqi]"
           priority={priorityImage}
+          unoptimized
         />
       </CardContent>
       <CardFooter className="flex flex-row flex-nowrap p-0 rounded-b-xl">
