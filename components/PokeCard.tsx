@@ -11,15 +11,35 @@ import {
 import { cn } from "@/lib/utils"
 import { Pokemon } from "@/types/pokemon"
 
+import Favorite from "./Favorite"
+
 interface PokeCardProps extends React.ComponentPropsWithoutRef<"div"> {
   pokemon: Pokemon
   priorityImage?: boolean
+  canFavorite?: boolean
+  isFavorite?: boolean
+  onFavorite?: (isFavorite: boolean) => void
 }
 
 export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
-  { pokemon, priorityImage = false, ...props },
+  {
+    pokemon,
+    priorityImage = false,
+    canFavorite = false,
+    isFavorite = false,
+    onFavorite,
+    ...props
+  },
   ref,
 ) {
+  const onFavoriteClicked = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+  ) => {
+    e.stopPropagation()
+    e.preventDefault()
+    onFavorite?.(!isFavorite)
+  }
+
   return (
     <Card
       {...props}
@@ -38,7 +58,7 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
           {pokemon.name}
         </CardTitle>
       </CardHeader>
-      <CardContent className="bg-radial dark:bg-radial-dark group-hover/card:bg-radial-strong transition-bg-radial duration-500 ease-in-out p-0">
+      <CardContent className="bg-radial dark:bg-radial-dark group-hover/card:bg-radial-strong transition-bg-radial duration-500 ease-in-out p-0 relative">
         <Image
           src={pokemon.image}
           alt={pokemon.name}
@@ -49,6 +69,13 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
           priority={priorityImage}
           unoptimized
         />
+        {canFavorite && (
+          <Favorite
+            isFavorite={isFavorite}
+            onClick={onFavoriteClicked}
+            className="absolute top-1 right-1 z-10"
+          />
+        )}
       </CardContent>
       <CardFooter className="flex flex-row flex-nowrap p-0 rounded-b-xl">
         {pokemon.types.map((type) => (

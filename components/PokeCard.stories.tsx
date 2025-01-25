@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { ComponentProps } from "react"
 
 import * as mockedPokemon from "@/test/mock/pokemon"
 
@@ -24,8 +25,12 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  render: ({ mockPokemon }) => (
-    <PokeCard pokemon={mockPokemonMap[mockPokemon]} className="w-60" />
+  render: ({ mockPokemon, ...props }) => (
+    <PokeCard
+      {...props}
+      pokemon={mockPokemonMap[mockPokemon]}
+      className="w-60"
+    />
   ),
   argTypes: {
     mockPokemon: {
@@ -37,7 +42,12 @@ const meta = {
   args: {
     mockPokemon: "bulbasaur",
   },
-} satisfies Meta<{ mockPokemon: keyof MockPokemonMap }>
+} satisfies Meta<
+  { mockPokemon: keyof MockPokemonMap } & Omit<
+    ComponentProps<typeof PokeCard>,
+    "pokemon"
+  >
+>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -49,6 +59,13 @@ export const Hover: Story = {
     pseudo: {
       hover: true,
     },
+  },
+}
+
+export const WithFavorite: Story = {
+  args: {
+    canFavorite: true,
+    isFavorite: true,
   },
 }
 

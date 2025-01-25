@@ -134,6 +134,7 @@ export default function PokemonList() {
             pokemon={pokemon}
             data-id={pokemon.id}
             data-name={pokemon.name}
+            canFavorite
           />
         </Link>
       )}

@@ -6,7 +6,7 @@ import { ThemeSwitcher } from "@/components/ThemeSwitcher"
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-10 backdrop-blur-xl bg-white/85 dark:bg-slate-950/85 py-2 my-2">
+    <header className="sticky top-0 z-20 backdrop-blur-xl bg-white/85 dark:bg-slate-950/85 py-2 my-2">
       <div
         role="group"
         className="container lg:max-w-5xl flex items-center gap-3 mx-auto px-4 lg:px-0"
