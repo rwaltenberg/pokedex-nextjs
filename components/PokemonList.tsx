@@ -1,5 +1,6 @@
 "use client"
 
+import { useLocalStorageState } from "ahooks"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { forwardRef, useCallback, useState } from "react"
@@ -48,6 +49,29 @@ export default function PokemonList() {
 
   const router = useRouter()
   const [selected, setSelected] = useState<number | null>(null)
+
+  const [favorites, setFavorites] = useLocalStorageState<number[]>(
+    "favorites",
+    {
+      defaultValue: [],
+    },
+  )
+
+  const toggleFavorite = useCallback(
+    (id: number) => {
+      setFavorites((favorites = []) =>
+        favorites.includes(id)
+          ? favorites.filter((favorite) => favorite !== id)
+          : [...favorites, id],
+      )
+    },
+    [setFavorites],
+  )
+
+  const isFavorite = useCallback(
+    (id: number) => favorites?.includes(id) ?? false,
+    [favorites],
+  )
 
   const choosePokemon = useCallback(
     async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -135,6 +159,8 @@ export default function PokemonList() {
             data-id={pokemon.id}
             data-name={pokemon.name}
             canFavorite
+            isFavorite={isFavorite(pokemon.id)}
+            onFavorite={() => toggleFavorite(pokemon.id)}
           />
         </Link>
       )}
