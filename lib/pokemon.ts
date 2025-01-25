@@ -46,7 +46,7 @@ export const getPokemonImageUrl = (pokemon: PokemonFragment): string => {
     return pokemonSprite.sprites.other.home.front_default as string
   }
 
-  return getPokemonLeageImageUrl(pokemon.speciesId ?? pokemon.id)
+  return getPokemonLeageImageUrl(pokemon.species?.id ?? pokemon.id)
 }
 
 export function getPokemonTypes(pokemon: PokemonFragment): PokemonType[] {
@@ -62,8 +62,8 @@ export function getPokemonTypes(pokemon: PokemonFragment): PokemonType[] {
 
 export function parsePokemon(pokemon: PokemonFragment): Pokemon {
   const id = pokemon.id
-  const number = pokemon.speciesId ?? pokemon.id
-  const name = pokemon.name
+  const number = pokemon.species?.id ?? pokemon.id
+  const name = pokemon.species?.name ?? pokemon.name
   const image = getPokemonImageUrl(pokemon)
   const types = getPokemonTypes(pokemon)
 

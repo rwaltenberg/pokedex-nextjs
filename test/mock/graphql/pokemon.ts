@@ -14,7 +14,10 @@ const generatePokemonMock = (
   id,
   name,
   order: id,
-  speciesId: id,
+  species: {
+    id,
+    name,
+  },
   types: [type1, type2].filter(Boolean).map((type, index) => ({
     id: type as number,
     pokemonId: id,

@@ -13,7 +13,10 @@ fragment Pokemon on pokemon_v2_pokemon {
   id
   name
   order
-  speciesId: pokemon_species_id
+  species: pokemon_v2_pokemonspecy {
+    id
+    name
+  }
   types: pokemon_v2_pokemontypes(order_by: { slot: asc }) {
     id
     pokemonId: pokemon_id

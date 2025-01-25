@@ -54,7 +54,7 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
         <span className="p-[4cqi] rounded-tl-xl bg-gray-200 text-[6.5cqi] font-semibold dark:bg-slate-800">
           #{pokemon.number.toString().padStart(4, "0")}
         </span>
-        <CardTitle className="flex-1 p-[4cqi] text-[7cqi] capitalize">
+        <CardTitle className="flex-1 p-[4cqi] text-[7cqi] text-nowrap overflow-hidden text-ellipsis capitalize">
           {pokemon.name}
         </CardTitle>
       </CardHeader>
