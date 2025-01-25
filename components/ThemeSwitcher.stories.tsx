@@ -14,7 +14,9 @@ const meta = {
   decorators: [
     (Story) => (
       <ThemeProvider attribute="class">
-        <Story />
+        <div className="h-40 w-40 flex justify-center">
+          <Story />
+        </div>
       </ThemeProvider>
     ),
   ],
