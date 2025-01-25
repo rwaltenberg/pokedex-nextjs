@@ -4,10 +4,10 @@ import { useMemo, useState } from "react"
 import { GetPokemonListDocument } from "@/generated/graphql"
 import { parsePokemon } from "@/lib/pokemon"
 
-export function usePokemonList() {
-  const [hasMore, setHasMore] = useState(true)
+export function usePokemonList(limit?: number) {
+  const [hasMore, setHasMore] = useState(Boolean(limit))
   const { data, fetchMore } = useSuspenseQuery(GetPokemonListDocument, {
-    variables: { offset: 0, limit: 50 },
+    variables: { offset: 0, limit },
   })
 
   const pokemonList = useMemo(() => data.pokemon.map(parsePokemon), [data])
@@ -18,7 +18,7 @@ export function usePokemonList() {
     }
 
     const { data: newData } = await fetchMore({
-      variables: { offset: pokemonList.length, limit: 50 },
+      variables: { offset: pokemonList.length, limit },
     })
 
     if (newData.pokemon.length === 0) {
