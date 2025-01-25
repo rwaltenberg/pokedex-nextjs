@@ -34,4 +34,9 @@ describe("PokeCard", () => {
     const image = screen.getByAltText("bulbasaur")
     expect(image).toHaveAttribute("fetchpriority", "high")
   })
+
+  it("has role group by default", () => {
+    render(<PokeCard pokemon={mockBulbasaur} />)
+    expect(screen.getByRole("group")).toBeInTheDocument()
+  })
 })

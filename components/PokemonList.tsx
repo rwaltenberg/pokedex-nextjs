@@ -35,7 +35,7 @@ const gridComponents: GridComponents<{
   Footer: function PokemonListLoading({ context }) {
     return (
       context?.hasMore && (
-        <div className="grid place-items-center py-8">
+        <div className="grid place-items-center my-8">
           <span className="opacity-60 loading loading-dots loading-lg" />
         </div>
       )

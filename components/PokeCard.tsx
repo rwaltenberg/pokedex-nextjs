@@ -25,9 +25,10 @@ export default forwardRef<HTMLDivElement, PokeCardProps>(function PokeCard(
       {...props}
       ref={ref}
       className={cn(
-        "pokecard group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out cursor-pointer",
+        "pokecard group/card @container/card sm:hover:scale-105 transition-transform duration-150 ease-in-out",
         props.className,
       )}
+      role="group"
     >
       <CardHeader className="bg-gray-100 dark:bg-slate-900 text-xs @[12rem]/card:text-base flex flex-row items-center space-y-0 p-0 rounded-t-xl">
         <span className="p-[4cqi] rounded-tl-xl bg-gray-200 text-[6.5cqi] font-semibold dark:bg-slate-800">

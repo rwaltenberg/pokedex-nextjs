@@ -17,7 +17,7 @@ export default function Home({ params }: { params: { slug: string } }) {
   const pokemon = useMemo(() => parsePokemon(data.pokemon!), [data])
 
   return (
-    <div className="grid grid-cols-4 gap-8">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
       <PokeCard pokemon={pokemon} />
     </div>
   )
