@@ -20,9 +20,10 @@ export default forwardRef<SVGSVGElement, FavoriteProps>(function Favorite(
       {...props}
       className={cn(
         "cursor-pointer",
-        "stroke-slate-700 dark:stroke-slate-300 hover:stroke-red-600",
+        "text-slate-700 dark:text-slate-300 hover:text-red-600",
         {
-          "fill-red-600 stroke-red-600 hover:fill-red-600/70": isFavorite,
+          "fill-red-600 text-red-600 dark:text-red-600 hover:fill-red-600/70":
+            isFavorite,
           "hover:fill-red-600/50": !isFavorite,
         },
         props.className,
