@@ -1,6 +1,5 @@
 "use client"
 
-import { useLocalStorageState } from "ahooks"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { forwardRef, useCallback, useState } from "react"
@@ -8,6 +7,7 @@ import { GridComponents, VirtuosoGrid } from "react-virtuoso"
 import slugify from "slugify"
 
 import PokeCard from "@/components/PokeCard"
+import { useFavoritePokemon } from "@/hooks/useFavoritePokemon"
 import { usePokemonList } from "@/hooks/usePokemonList"
 import { cn } from "@/lib/utils"
 
@@ -50,28 +50,7 @@ export default function PokemonList() {
   const router = useRouter()
   const [selected, setSelected] = useState<number | null>(null)
 
-  const [favorites, setFavorites] = useLocalStorageState<number[]>(
-    "favorites",
-    {
-      defaultValue: [],
-    },
-  )
-
-  const toggleFavorite = useCallback(
-    (id: number) => {
-      setFavorites((favorites = []) =>
-        favorites.includes(id)
-          ? favorites.filter((favorite) => favorite !== id)
-          : [...favorites, id],
-      )
-    },
-    [setFavorites],
-  )
-
-  const isFavorite = useCallback(
-    (id: number) => favorites?.includes(id) ?? false,
-    [favorites],
-  )
+  const { toggleFavorite, isFavorite } = useFavoritePokemon()
 
   const choosePokemon = useCallback(
     async (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
